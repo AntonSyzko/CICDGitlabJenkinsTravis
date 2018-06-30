@@ -33,7 +33,7 @@ pipeline {
                 }
             }
         }
-
+         /*
         stage ('Run JAR  Stage') {
                     steps {
                         withMaven(maven : 'maven_3_5_3') {
@@ -48,6 +48,7 @@ pipeline {
                         }
                     }
                 }
+           */
         stage ('Docker build image   Stage') {
                     steps {
                         withMaven(maven : 'maven_3_5_3') {

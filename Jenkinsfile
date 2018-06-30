@@ -46,6 +46,24 @@ pipeline {
                         }
                     }
                 }
+        stage ('Docker build image   Stage') {
+                    steps {
+                        withMaven(maven : 'maven_3_5_3') {
+                            sh 'docker ps -a'
+                            sh 'mvn install dockerfile:build'
+                            sh 'mvn dockerfile:push'
+                        }
+                    }
+                }
+
+        stage ('Docker run container    Stage') {
+                            steps {
+                                withMaven(maven : 'maven_3_5_3') {
+                                    sh 'docker images -a'
+                                    sh 'docker run -p 8084:8085 -t antonsyzko/example1'
+                                }
+                            }
+                        }
     }
 }
 

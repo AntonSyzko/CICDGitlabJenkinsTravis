@@ -54,6 +54,8 @@ pipeline {
                         withMaven(maven : 'maven_3_5_3') {
                             sh 'docker ps -a'
                             sh 'mvn install dockerfile:build'
+                            sh 'echo $DOCKER_PASSWORD | docker login -u ${DOCKER_USERNAME} --password-stdin'
+                            sh 'docker tag cicdexample1 antonsyzko/example1'
                             sh 'mvn dockerfile:push'
                         }
                     }

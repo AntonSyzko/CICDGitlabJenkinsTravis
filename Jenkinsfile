@@ -43,7 +43,7 @@ pipeline {
                             sh 'firewall-cmd --zone=public --add-port=8085/tcp --permanent'
                             sh 'firewall-cmd --reload'
                             sh 'java -jar /root/.jenkins/workspace/cicdtest/target/example1-0.0.1-SNAPSHOT.jar'
-                            sh 'curl -X GET http://localhost:8085/cicdtest/actuator/health'
+                            sh 'curl -X GET http://213.251.42.90:8085/cicdtest/actuator/health'
                             sh 'kill -9 $(lsof -t -i:8085)'
                         }
                     }

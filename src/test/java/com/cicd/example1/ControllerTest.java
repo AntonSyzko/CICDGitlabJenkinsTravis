@@ -32,7 +32,7 @@ public class ControllerTest {
 
     @Test
     public void greetingShouldReturnDefaultMessage() throws Exception {
-        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
+        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/cicdtest/",
                 String.class)).contains("Hello from Boot");
     }
 

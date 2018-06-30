@@ -34,7 +34,7 @@ pipeline {
             }
         }
 
-        stage ('Run  Stage') {
+        stage ('Run JAR  Stage') {
                     steps {
                         withMaven(maven : 'maven_3_5_3') {
                             sh 'pwd'
@@ -42,7 +42,9 @@ pipeline {
                             sh 'chmod a+rx /root/.jenkins/workspace/cicdtest/target/example1-0.0.1-SNAPSHOT.jar'
                             sh 'firewall-cmd --zone=public --add-port=8085/tcp --permanent'
                             sh 'firewall-cmd --reload'
-                            sh 'java -jar /root/.jenkins/workspace/cicdtest/target/example1-0.0.1-SNAPSHOT.jar'
+                            sh 'nohup java -jar /root/.jenkins/workspace/cicdtest/target/example1-0.0.1-SNAPSHOT.jar &'
+                            sh 'curl -X GET http://localhost:8085/cicdtest/actuator/health'
+                            sh 'kill -9 $(lsof -t -i:8085)'
                         }
                     }
                 }
@@ -60,7 +62,7 @@ pipeline {
                             steps {
                                 withMaven(maven : 'maven_3_5_3') {
                                     sh 'docker images -a'
-                                    sh 'docker run -p 8084:8085 -t antonsyzko/example1'
+                                    sh 'docker run -p 8085:8085 -t antonsyzko/example1'
                                 }
                             }
                         }

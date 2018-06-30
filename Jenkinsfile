@@ -56,8 +56,8 @@ pipeline {
                             sh 'mvn install dockerfile:build'
                             sh 'echo $DOCKER_USERNAME'
                             sh 'docker login -u antonsyzko -p AntonSyzkoDockerhub123'
-                            //sh 'docker tag firstimage  antonsyzko/example1:firstimage'
-                            sh 'mvn dockerfile:push'
+                            sh 'docker tag latest  antonsyzko/example1:firstimage'
+                            //sh 'mvn dockerfile:push'
                         }
                     }
                 }
@@ -65,8 +65,8 @@ pipeline {
         stage ('Docker run container    Stage') {
                             steps {
                                 withMaven(maven : 'maven_3_5_3') {
-                                    sh 'docker images -a'
-                                    sh 'docker run -p 8085:8085 -t antonsyzko/example1'
+                                    sh 'docker images '
+                                    sh 'docker run -d --name cicdtest -p 8085:8085  antonsyzko/example1'
                                 }
                             }
                         }

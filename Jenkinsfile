@@ -56,7 +56,7 @@ pipeline {
                             sh 'mvn install dockerfile:build'
                             sh 'echo $DOCKER_USERNAME'
                             sh 'docker login -u antonsyzko -p AntonSyzkoDockerhub123'
-                            sh 'docker tag firstimage  antonsyzko/example1:firstimage'
+                            //sh 'docker tag firstimage  antonsyzko/example1:firstimage'
                             sh 'mvn dockerfile:push'
                         }
                     }

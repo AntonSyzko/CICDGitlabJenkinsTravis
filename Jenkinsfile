@@ -40,6 +40,8 @@ pipeline {
                             sh 'pwd'
                             sh 'ls -la'
                             sh 'chmod a+rx /root/.jenkins/workspace/cicdtest/target/example1-0.0.1-SNAPSHOT.jar'
+                            sh 'firewall-cmd --zone=public --add-port=8085/tcp --permanent'
+                            sh 'firewall-cmd --reload'
                             sh 'java -jar /root/.jenkins/workspace/cicdtest/target/example1-0.0.1-SNAPSHOT.jar'
                         }
                     }

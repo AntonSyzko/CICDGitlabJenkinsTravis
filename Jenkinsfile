@@ -34,14 +34,16 @@ pipeline {
             }
         }
 
-        stage ('Deploy Stage') {
+        stage ('Run  Stage') {
                     steps {
                         withMaven(maven : 'maven_3_5_3') {
-                            sh 'mvn deploy'
                             sh 'pwd'
                             sh 'ls -la'
+                            sh 'chmod a+rx /root/.jenkins/workspace/cicdtest/target/example1-0.0.1-SNAPSHOT.jar'
+                            sh 'java -jar /root/.jenkins/workspace/cicdtest/target/example1-0.0.1-SNAPSHOT.jar'
                         }
                     }
                 }
     }
 }
+

@@ -91,7 +91,8 @@ pipeline {
 
         stage ('Run docker container remotely ') {
                                    steps {
-                                      sh 'ssh root@213.251.40.102 "docker run --rm -d --name cicdtest -p 8086:8085  antonsyzko/example1:latest & docker ps -a && exit "'
+                                      sh 'docker login -u antonsyzko -p AntonSyzkoDockerhub123'
+                                      sh 'ssh root@213.251.40.102 "docker run --rm -d --name cicdtest -p 8086:8085  antonsyzko/example1 && exit "'
                                       sh 'ssh root@213.251.40.102  "docker ps  && exit"'
                                           }
                                 }

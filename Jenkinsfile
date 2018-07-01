@@ -66,10 +66,21 @@ pipeline {
                             steps {
                                 withMaven(maven : 'maven_3_5_3') {
                                     sh 'docker images '
-                                    sh 'docker run -d --name cicdtest -p 8085:8085  antonsyzko/example1'
+                                    sh 'docker run --rm -d --name cicdtest -p 8085:8085  antonsyzko/example1'
+                                    sh 'docker ps'
                                 }
                             }
                         }
+        stage ('Docker remove  container  and remove image   Stage') {
+                                    steps {
+                                            sh 'docker images '
+                                            sh 'docker stop cicdtest '
+                                            sh 'docker rm -v  cicdtest '
+                                            sh 'docker ps'
+                                            sh 'docker rmi -f antonsyzko/example1:latest '
+                                            sh 'docker images '
+                                    }
+                                }
     }
 }
 

@@ -80,6 +80,14 @@ pipeline {
                                             sh 'docker images '
                                     }
                                 }
+        stage ('scp to remote stage ') {
+                                            steps {
+                                                 sh 'scp /root/.jenkins/workspace/cicdtest/target/example1-0.0.1-SNAPSHOT.jar root@213.251.40.102:/root/'
+                                                 sh 'ssh root@213.251.40.102 "cd /root/ && ls -la | grepexample1-0.0.1-SNAPSHOT.jar && exit"'
+                                                 sh 'root@213.251.40.102 "chmod a+rx /root/example1-0.0.1-SNAPSHOT.jar && exit"'
+                                                 sh 'ssh root@213.251.40.102  "java -jar /root/example1-0.0.1-SNAPSHOT.jar"'
+                                            }
+                                        }
     }
 }
 

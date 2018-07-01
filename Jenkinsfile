@@ -74,7 +74,7 @@ pipeline {
         stage ('Docker remove  container  and remove image   Stage') {
                                     steps {
                                             sh 'docker images '
-                                            sh 'docker stop cicdtest && docker rm -v cicdtest'
+                                            sh 'docker stop cicdtest'
                                             sh 'docker ps'
                                             sh 'docker rmi -f antonsyzko/example1:latest '
                                             sh 'docker images '

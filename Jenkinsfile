@@ -86,13 +86,15 @@ pipeline {
                                                  sh 'ssh root@213.251.40.102 "rm example1-0.0.1-SNAPSHOT.jar >/dev/null 2>&1 &  exit"'
                                                  sh 'scp /root/.jenkins/workspace/cicdtest/target/example1-0.0.1-SNAPSHOT.jar root@213.251.40.102:/root/'
                                                  sh 'ssh root@213.251.40.102 "cd /root/ && ls -la | grep example1-0.0.1-SNAPSHOT.jar && exit"'
-                                                 sh 'ssh root@213.251.40.102  "java -Dserver.port=8888 -jar example1-0.0.1-SNAPSHOT.jar >/dev/null 2>&1 &  exit"'
+                                                 sh 'ssh root@213.251.40.102  "java -Dserver.port=8889 -jar example1-0.0.1-SNAPSHOT.jar >/dev/null 2>&1 &  exit"'
                                             }
                                         }
 
         stage ('Run docker container remotely ') {
                                    steps {
-                                      sh 'docker stop cicdtest && docker rm -v cicdtest >/dev/null 2>&1 &  exit'
+                                      sh 'docker stop cicdtest && exit'
+
+                                       sh 'docker rm -v cicdtest >/dev/null 2>&1 &&  exit'
                                       sh 'docker login -u antonsyzko -p AntonSyzkoDockerhub123'
                                       sh 'ssh root@213.251.40.102 "docker run --rm -d --name cicdtest -p 8086:8085  antonsyzko/example1 && exit "'
                                       sh 'ssh root@213.251.40.102  "docker ps  && exit"'

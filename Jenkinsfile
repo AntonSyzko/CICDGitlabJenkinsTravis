@@ -109,7 +109,7 @@ pipeline {
                                         sh 'scp  example1.tar root@213.251.40.102:/root '
                                         sh 'ssh root@213.251.40.102 "docker load < /root/example1.tar && exit"'
                                         sh 'ssh root@213.251.40.102 "docker images && exit"'
-                                        sh 'ssh    docker run --rm -d --name cicdtest -p 8085:8085 antonsyzko/example1 && exit'
+                                        sh 'ssh  root@213.251.40.102  docker run --rm -d --name cicdtest -p 8085:8085 antonsyzko/example1 && exit'
                                         sh 'ssh root@213.251.40.102  "docker ps  && exit"'
                                           }
 

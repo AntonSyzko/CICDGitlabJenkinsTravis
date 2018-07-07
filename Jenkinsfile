@@ -62,7 +62,7 @@ pipeline {
                     }
                 }
 
-        stage ('Docker run container    Stage') {
+        stage ('Docker run container on Jenkins machine    Stage') {
                             steps {
                                 withMaven(maven : 'maven_3_5_3') {
                                     sh 'docker images '
@@ -76,10 +76,11 @@ pipeline {
                                             sh 'docker images '
                                             sh 'docker stop cicdtest'
                                             sh 'docker ps'
-                                            sh 'docker rmi -f antonsyzko/example1:latest '
+                                            //sh 'docker rmi -f antonsyzko/example1:latest '
                                             sh 'docker images '
                                     }
                                 }
+/*
         stage ('scp to remote stage and java jar ') {
                                             steps {
                                                  sh 'docker stop cicdtest >/dev/null 2>&1 &  exit'
@@ -100,8 +101,23 @@ pipeline {
                                       sh 'ssh root@213.251.40.102  "docker ps  && exit"'
                                           }
                                 }
+                                */
+
+         stage ('Run docker container remotely ') {
+                                    steps {
+                                        sh 'docker save antonsyzko/example1:latest >  example1.tar '
+                                        sh 'scp  example1.tar root@213.251.40.102:/root '
+                                        sh 'ssh root@213.251.40.102 "docker load < /root/example1.tar && exit"'
+                                        sh 'ssh root@213.251.40.102 "docker images && exit"'
+                                        sh 'ssh    docker run --rm -d --name cicdtest -p 8085:8085 antonsyzko/example1 && exit'
+                                        sh 'ssh root@213.251.40.102  "docker ps  && exit"'
+                                          }
+
+                                       }
 
 
     }
+
+
 }
 
